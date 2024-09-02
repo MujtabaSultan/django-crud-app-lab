@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/modification/modification-detail.css' %}" />
+{% endblock %} 
+{% block content %}
+
+<div class="card" style="border-color: {{ modification.color }}">
+  <div class="card-bg" style="background-color: {{ modification.color }}"></div>
+  <div class="card-content">
+    <h2>{{ modification.name }}</h2>
+    <h3>A {{ modification.price }}$ modification</h3>
+  </div>
+</div>
+<a href="{% url "modification-update" modification.id %}" class="btn warn">Edit</a>
+<a href="{% url "modification-delete" modification.id %}" class="btn danger">Delete</a>
+
+{% endblock %}

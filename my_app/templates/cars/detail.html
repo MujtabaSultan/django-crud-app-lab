@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/cars/car-detail.css' %}" />
+{% endblock %} {% block content %}
+<section class="car-container">
+  <div class="car-img">
+    <img src="{% static 'images/car1.jpg' %}" alt="A car" />
+  </div>
+  <div class="car-details">
+    <h1>{{ car.model }}</h1>
+
+    <h2>A {{ car.model}} from {{ car.brand }}</h2>
+
+    <h2>A {{ car.color}} car</h2>
+
+    <div class="car-actions">
+      <a href="{% url 'car-update' car.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'car-delete' car.id %}" class="btn danger">Delete</a>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="modifications">
+  <div class="subsection-title">
+    <h2>modifications</h2>
+  
+  </div>
+  <h3>{{ car.model }}'s modifications</h3>
+  <div class="subsection-content">
+    {% if car.modifications.count %} 
+      {% for modification in car.modifications.all %}
+        <div class="modification-container">
+          <div class="color-block" style="background-color: {{ modification.color }}"></div>
+          <a href="{% url 'modification-detail' modification.id %}">
+            <p>A {{ modification.color }} {{ modification.name }}</p>
+            <form action="{% url 'remove-modification' car.id modification.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Remove modification</button>
+            </form>
+          </a>
+        </div>
+      {% endfor %} 
+    {% else %}
+      <p class="no-modifications">{{car.model}} doesn't have any modifications!</p>
+    {% endif %}
+  </div>
+  <h3>Available modifications</h3>
+  <div class="subsection-content">
+    {% if modifications.count %}
+    {% for modification in modifications %}
+    <div class="modification-container">
+      <div class="color-block" style="background-color: {{ modification.color }}"></div>
+      <p>{{ modification.name }} : {{ modification.price }}$</p>
+      <form action="{% url "associate-modification" car.id modification.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn submit">Give modification</button>
+      </form>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="all-modifications">{{car.model}} already has all the available modifications!</p>
+    {% endif %}
+  </div>
+</section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

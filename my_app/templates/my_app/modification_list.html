@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/modifications/modification-index.css' %}" /> {% endcomment %}
+{% endblock %} 
+{% block content %}
+
+<section class="page-header">
+  <h1>All Car modifications</h1>
+ 
+</section>
+
+<section class="card-container">
+  {% for modification in modification_list %}
+    <div class="card" style="border-color: {{ modification.color }}">
+      <div class="card-bg" style="background-color: {{ modification.color }}"></div>
+      <a href="{% url 'modification-detail' modification.id %}">
+        <div class="card-content">
+          <h2>{{ modification.name }}</h2>
+          <p>A {{ modification.name }} modification</p>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

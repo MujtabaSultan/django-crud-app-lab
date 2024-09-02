@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="" />
+    <title>Cars Collector</title>
+    {% block head %} {% endblock %}
+  </head>
+  <body>
+    <header>
+      <div class="header-logo-container">
+        <a href="/">
+          <img
+            src="{% static 'images/car1.jpg' %}"
+            alt="The Car Collector Logo"
+            class="fixdis"
+          />
+        </a>
+      </div>
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'car-index' %}">All Cars</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'car-create' %}">Add a Car</a></li>
+          <li><a href="{% url 'signup'%}">signup</a></li>
+          <li>
+            <form action="{% url 'logout' %}" method="post" id="logout-form">
+              {% csrf_token %}
+              <button type="submit">Log out</button>
+            </form>
+          </li>
+
+          <li>
+            <a href="{% url 'modification-index' %}">all modifications</a>
+          </li>
+          <li>
+            <a href="{% url 'modification-create' %}">add a modification</a>
+          </li>
+
+          {% else %} 
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'home' %}">Login</a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>{% block content %} {% endblock %}</main>
+  </body>
+</html>
